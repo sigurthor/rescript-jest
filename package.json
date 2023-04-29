@@ -8,10 +8,7 @@
     "build": "rescript build -with-deps",
     "clean": "rescript clean",
     "start": "rescript build -w",
-    "test": "npm run build && jest",
-    "test-ci": "npm run build && jest --coverage --coverageDirectory='coverage'",
     "watch:rescript": "rescript build -with-deps -w",
-    "watch:jest": "jest --coverage --watchAll",
     "watch:screen": "screen -c .screenrc"
   },
   "repository": {
@@ -35,7 +32,7 @@
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
     "babel-jest": "^27.3.1",
-    "rescript": "^9.1.4"
+    "rescript": "11.0.0-alpha.5"
   },
   "dependencies": {
     "@ryyppy/rescript-promise": "^2.1.0",

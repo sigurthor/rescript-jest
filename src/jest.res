@@ -1,6 +1,7 @@
 type modifier<'a> = [
   | #Just('a)
   | #Not('a)
+
 ]
 
 let mapMod = (f, x) =>
@@ -8,6 +9,8 @@ let mapMod = (f, x) =>
   | #Just(a) => #Just(f(a))
   | #Not(a) => #Not(f(a))
   }
+
+
 
 type rec assertion =
   | Ok: assertion
@@ -170,8 +173,8 @@ module Runner = (A: Asserter) => {
       Js.Undefined.fromOption(timeout),
     )
 
-  let testAll = (name, inputs, callback) => List.iter(input => {
-      let name = j`$name - $input`
+  let testAll = (name, inputs:list<'a>, callback) => List.iter(input => {
+      let name = `${name} - ${input}`
       _test(name, () => {
         affirm(callback(input))
         Js.undefined
@@ -179,7 +182,7 @@ module Runner = (A: Asserter) => {
     }, inputs)
   
   let testAllPromise = (name: string, inputs, ~timeout=?, callback) => List.iter(input => {
-    let name = j`$name - $input`
+    let name = `${name} - ${input}`
     _testPromise(
       name, 
       () => Promise.then(callback(input), a => a->A.affirm->Promise.resolve),
@@ -291,7 +294,7 @@ module Runner = (A: Asserter) => {
       )
 
     let testAll = (name, inputs, callback) => List.iter(input => {
-        let name = j`$name - $input`
+        let name = `${name} - ${input}`
         _test(name, () => {
           affirm(callback(input))
           Js.undefined
@@ -299,7 +302,7 @@ module Runner = (A: Asserter) => {
       }, inputs)
   
     let testAllPromise = (name, inputs, ~timeout=?, callback) => List.iter(input => {
-      let name = j`$name - $input`
+      let name = `${name} - ${input}`
       _testPromise(
         name, 
         () => Promise.then(callback(input), a => a->A.affirm->Promise.resolve),
@@ -324,11 +327,11 @@ module Runner = (A: Asserter) => {
     external testPromise: (string, @uncurry (unit => Promise.t<A.t<'a>>)) => unit = "it.skip"
     let testPromise = (name, ~timeout as _=?, callback) => testPromise(name, callback)
     let testAll = (name, inputs, callback) => List.iter(input => {
-        let name = j`$name - $input`
+        let name = `${name} - ${input}`
         test(name, () => callback(input))
       }, inputs)
     let testAllPromise = (name, inputs, ~timeout as _=?, callback) => List.iter(input => {
-        let name = j`$name - $input`
+        let name = `${name} - ${input}`
         testPromise(name, () => callback(input))
       }, inputs)
     @val
